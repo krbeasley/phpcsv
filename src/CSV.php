@@ -38,8 +38,7 @@ class CSV
 
         if ($include_headers) { 
             // grab the first element as headers
-            $this->headers = $content_array[0];
-            unset($content_array[0]); // remove the headers leaving just the content
+            $this->headers = array_shift($content_array);
         }
 
         $this->contents = $content_array;
@@ -47,11 +46,11 @@ class CSV
         return $this;
     }
 
-    public function headers() : array {
+    public function getHeaders() : array {
         return $this->headers;
     }
 
-    public function contents() : array {
+    public function getContents() : array {
         return $this->contents;
     }
 
@@ -72,7 +71,8 @@ class CSV
         while(($del_location = strpos($line, $this->delimiter)) !== false) {
 
             // Update the delimiter location to the next delimiter if the current one is escaped. 
-            if ($this->charIsEscaped($line, $this->delimiter)) {
+            if ($this->charIsEscaped($line, $this->delimiter) ||
+                $this->charIsQuoted($line)) {
                 $offset = $del_location + 1;
                 $del_location = strpos($line, $this->delimiter, $offset);
             }
@@ -113,6 +113,14 @@ class CSV
             // make sure the escape char itself is not escaped
             $prev_prev_char = substr($string, $char_index - 2, 1);
             return $prev_prev_char != '\\';
+        }
+
+        return false;
+    }
+
+    public function charIsQuoted(string $string) : bool {
+        if (str_starts_with($string, '"') || str_ends_with($string, "'")) {
+            return true;
         }
 
         return false;

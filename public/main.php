@@ -13,4 +13,10 @@ use Krbeasley\PhpCsv\CSV;
 
 $reader = (new CSV($file_path))->read();
 
-var_dump($reader->headers());
+
+for ($i = 0; $i < count($reader->getContents()); $i++) {
+    $count = $i + 1;
+    $line = $reader->getContents()[$i];
+
+    echo "[$count] " . implode(", ", $line) . PHP_EOL;
+}
