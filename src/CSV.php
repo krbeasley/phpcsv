@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Krbeasley\PhpCsv;
 
+use PHPUnit\Framework\TestStatus\Warning;
+
 class CSV
 {
     protected string $delimiter;
@@ -134,5 +136,45 @@ class CSV
 
 
         return false;
+    }
+
+    /** Get the all of the values for a specified column index
+    *
+    * @param int $col_index
+    * @returns array
+    */
+    public function getColumnValues(int $col_index) : ?array {
+        $col_values = [];
+
+        foreach ($this->contents as $item) {
+            try {
+                $col_values[] = $item[$col_index];
+            } catch (\Exception) {
+                return null;
+            }
+        }
+
+        return $col_values;
+    }
+
+    /** Get all the values for a named column. Throws error if there are not defined headers
+    *   for the current CSV. 
+    *
+    * @param string $col_name
+    * @returns ?array
+    * @throws \Exception
+    */
+    public function getNamedColumnValues(string $col_name) : ?array {
+        if (is_null($this->headers)) {
+            throw new \Exception("There are no defined column names for this spreadsheet.");
+        }
+        
+        for ($i = 0; $i < count($this->headers); $i++) {
+            if ($this->headers[$i] === $col_name) {
+                return $this->getColumnValues($i);
+            }
+        }
+
+        return null;
     }
 }
