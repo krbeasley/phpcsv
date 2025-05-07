@@ -12,7 +12,7 @@ Author: [Kyle Beasley](github.com/krbeasley)
 - ~Get CSV headers~
 - ~Get CSV content~
 - ~Escaped and Quoted delimiter support~
-- Get all values in column by name or index
+- ~Get all values in column by name or index~
 - Get all values for specific row by column name or column index
 - Get value of adjacent cell
     - Above
