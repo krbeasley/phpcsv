@@ -11,13 +11,6 @@ require_once "$root/../vendor/autoload.php";
 
 use Krbeasley\PhpCsv\CSV;
 
-$reader = (new CSV($file_path))->read();
+$csv = (new CSV($file_path))->read();
 
 
-for ($i = 0; $i < count($reader->getContents()); $i++) {
-    $count = $i + 1;
-    $line = $reader->getContents()[$i];
-    $len = count($line);
-
-    echo "[$count] ($len) " . implode(", ", $line) . PHP_EOL;
-}
