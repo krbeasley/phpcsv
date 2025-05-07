@@ -118,8 +118,13 @@ class CSV
         return false;
     }
 
+    /** Check if the string starts or ends with a quotation mark. This is should be used only
+    *   when parsing CSV's or other delimited 'spreadsheet' files.
+    *
+    * @param string $string
+    */
     public function charIsQuoted(string $string) : bool {
-        if (str_starts_with($string, '"') || str_ends_with($string, "'")) {
+        if (str_starts_with($string, '"') || str_ends_with($string, '"')) {
             return true;
         }
 
