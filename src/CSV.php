@@ -107,10 +107,10 @@ class CSV
         }
 
         $prev_char = substr($string, $char_index - 1, 1);
-        
+
+        // This checks if the previous character is the escape character then checks again to 
+        // ensure the escape character is itself not escaped.  
         if ($prev_char === '\\') {
-            // the prvious char is a valid escape char
-            // make sure the escape char itself is not escaped
             $prev_prev_char = substr($string, $char_index - 2, 1);
             return $prev_prev_char != '\\';
         }

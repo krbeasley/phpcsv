@@ -17,6 +17,7 @@ $reader = (new CSV($file_path))->read();
 for ($i = 0; $i < count($reader->getContents()); $i++) {
     $count = $i + 1;
     $line = $reader->getContents()[$i];
+    $len = count($line);
 
-    echo "[$count] " . implode(", ", $line) . PHP_EOL;
+    echo "[$count] ($len) " . implode(", ", $line) . PHP_EOL;
 }
