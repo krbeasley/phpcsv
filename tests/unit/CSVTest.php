@@ -32,4 +32,17 @@ class CSVTest extends TestCase
 
         $this->assertEquals($exptected, $csv->splitLine($test_string));
     }
+
+    public function testCharIsQuoted()
+    {
+        $csv = new CSV(file_path: '');
+
+        $true = '"this is a test and true';
+        $true2 = 'this is also a test and true"';
+        $false = 'this has no quotes';
+
+        $this->assertTrue($csv->charIsQuoted($true));
+        $this->assertTrue($csv->charIsQuoted($true2));
+        $this->assertFalse($csv->charIsQuoted($false));
+    }
 }
