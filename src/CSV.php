@@ -32,15 +32,17 @@ class CSV
         //  matches = [[$matches]]
         $content_array = $content_array[0]; 
 
+        // Split each line on the delimiter
         for ($i = 0; $i < count($content_array); $i++) {
             $content_array[$i] = $this->splitLine($content_array[$i]);
         }
 
         if ($include_headers) { 
-            // grab the first element as headers
+            // grab the first line as headers
             $this->headers = array_shift($content_array);
         }
 
+        // set the contents
         $this->contents = $content_array;
 
         return $this;
@@ -118,7 +120,7 @@ class CSV
         return false;
     }
 
-    /** Check if the string starts or ends with a quotation mark. This is should be used only
+    /** Check if the string starts or ends with single or double quotes. This is should be used only
     *   when parsing CSV's or other delimited 'spreadsheet' files.
     *
     * @param string $string
@@ -126,7 +128,10 @@ class CSV
     public function charIsQuoted(string $string) : bool {
         if (str_starts_with($string, '"') || str_ends_with($string, '"')) {
             return true;
+        } else if (str_starts_with($string, "'") || str_ends_with($string, "'")) {
+            return true;
         }
+
 
         return false;
     }
